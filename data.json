@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Test Product 1",
+    "imageUrl": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+    "price": "10.000vnd",
+    "discountPrice": "8.000vnd",
+    "isSale": "Sale"
+  },
+  {
+    "name": "Test Product 2",
+    "imageUrl": "",
+    "price": "20.000vnd",
+    "discountPrice": "17.000vnd",
+    "isSale": "Sale"
+  },
+  {
+    "name": "Test Product 3",
+    "imageUrl": "",
+    "price": "30.000vnd",
+    "discountPrice": "",
+    "isSale": ""
+  }
+]
