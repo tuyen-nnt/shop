@@ -38,3 +38,62 @@ $(function() {
 
     });
 });
+
+
+$(function() {
+
+    $.getJSON( "data.json", function(data) {
+        // console.log(data)
+        var itemList = [];
+
+        $.each(data, function(index, items) {
+            itemList.push(`
+                <div class='col mb-5' id="index" value= 'item_'` + index.toString() + `' >
+                    <div class='card h-100'>
+                        <!-- Sale badge-->
+                        <div class='badge bg-dark text-white position-absolute' style='top: 0.5rem; right: 0.5rem'>Sale</div>
+                        <!-- Product image-->
+                        <img id="btn" class='card-img-top' src='` + items.imageUrl + `' alt='...' />
+                        <!-- Product details-->
+                        <div class='card-body p-4'>
+                            <div class='text-center'>
+                                <!-- Product name-->
+                                <h5 class='fw-bolder'>` + items.name + `</h5>
+<!--                                &lt;!&ndash; Product reviews&ndash;&gt;-->
+<!--                                <div class='d-flex justify-content-center small text-warning mb-2'>-->
+<!--                                    <div class='bi-star-fill'></div>-->
+<!--                                    <div class='bi-star-fill'></div>-->
+<!--                                    <div class='bi-star-fill'></div>-->
+<!--                                    <div class='bi-star-fill'></div>-->
+<!--                                    <div class='bi-star-fill'></div>-->
+<!--                                </div>-->
+                                <!-- Product price-->
+                                <span class='text-muted text-decoration-line-through'>`+ items.price + `</span>
+                                ` + items.discountPrice + `
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class='card-footer p-4 pt-0 border-top-0 bg-transparent'>
+                            <div class='text-center'><a class='btn btn-outline-dark mt-auto' href='#'>Add to cart</a></div>
+                        </div>
+                    </div>
+                </div>`);
+        });
+        // console.log(item + '\nnext\n')
+        items = itemList.join("\n")
+        $(items).appendTo("#products");
+    });
+});
+
+
+// https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+
+
+$(document).ready(function()
+{
+    $('.product').click(function(){
+        $(location).attr('href','shop_item.html');
+        //$(this).load('shop_item.html');
+    });
+});
+

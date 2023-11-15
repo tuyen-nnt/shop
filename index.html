@@ -4,7 +4,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <!-- Bootstrap core JS-->
 <!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>-->
-        <script src="scripts.js"></script>
+        <script src="js/scripts.js"></script>
         <script src="webserver.js"></script>
 
 
@@ -14,11 +14,11 @@
         <meta name="author" content="" />
         <title>Hompage - Products</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../css/styles.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
@@ -270,21 +270,43 @@
 
         <!-- Core theme JS-->
         <script>
-            const btn = document.getElementById('btn');
-            const url = 'http://127.0.0.1:5501/shop_item.html?';
 
-            const obj = fetch('./data.json')
-            console.log(obj)
+            function postData() {
+                var idItem = document.getAttribute('id');
+                // create query string
+                var vars = "id=" + idItem
+                console.log(vars)
+            }
+            var hr = new XMLHttpRequest()
+            var url = 'show_item.php'
 
-            const searchParams = new URLSearchParams();
-            searchParams.append('v1', JSON.stringify(obj))
+            hr.open("POST", url, true)
+            hr.setRequestHeader("Content-type", "application/x-wwwform-urlencoded")
+            hr.send(vars)
+            console.log(hr)
 
-            const queryString = searchParams.toString();
-            console.log(queryString)
-
-            btn.addEventListener('click', () => {
-                window.location.href = url + queryString
-            })
+            // var output = document.getElementById("output")
+            //
+            // function postData(){
+            //     var idItem = document.querySelector("")
+            // }
+            //
+            // // Add query string for item
+            // const btn = document.getElementById('btn');
+            // const url = 'http://127.0.0.1:5501/shop_item.html?';
+            //
+            // const obj = fetch('./data.json')
+            // console.log(obj)
+            //
+            // const searchParams = new URLSearchParams();
+            // searchParams.append('v1', JSON.stringify(obj))
+            //
+            // const queryString = searchParams.toString();
+            // console.log(queryString)
+            //
+            // btn.addEventListener('click', () => {
+            //     window.location.href = url + queryString
+            // })
 
 
 
@@ -292,20 +314,21 @@
             $(function() {
                 $.getJSON( "data.json", function(data) {
                     // console.log(data)
+                    itemList = []
                     $.each(data, function(index, items) {
                         itemList.push(`
                         <section class='py-5'>
                             <div class='container px-4px-lg-5my-5'>
                                 <div class='row gx-4 gx-lg-5 align-items-center'>
-                                    <div class='col-md-6'><img onclick='getItem()' class='card-img-top mb-5 mb-md-0' src='https://dummyimage.com/600x700/dee2e6/6c757d.jpg' href='shop_item.html'/></div>
+                                    <div class='col-md-6'><img onclick='postData()' class='card-img-top mb-5 mb-md-0' src='https://dummyimage.com/600x700/dee2e6/6c757d.jpg'/></div>
                                     <div class='col-md-6'>
-                                        <div class='small mb-1'>` + items.SKU + `</div>
+                                        <div class='small mb-1'>${items.SKU}</div>
                                         <h1 class='display-5fw-bolder' type='text' name='item-name' value=''></h1>
                                         <div class='fs-5mb-5'>
-                                            <span class='text-decoration-line-through' type='text' name='discount-price' value=''>` + items.discountPrice + `</span>
-                                            <span type='text' name='current-price' value=''>` + items.currentPrice + `</span>
+                                            <span class='text-decoration-line-through' type='text' name='discount-price' value=''>${items.discountPrice}</span>
+                                            <span type='text' name='current-price' value=''>${items.currentPrice}</span>
                                         </div>
-                                        <p class='lead'type='text'name='item-description' value=''>` + items.itemDescription + `</p>
+                                        <p class='lead'type='text'name='item-description' value=''>${items.itemDescription}</p>
                                         <div class='d-flex'>
                                             <input class='form-control text-center me-3' id='inputQuantity' type='num' value='1' style='max-width:3rem'/>
                                             <button class='btn btn-outline-dark flex-shrink-0' type='button'>
@@ -329,9 +352,6 @@
                     });
                 });
 
-            function getItem() {
-                index = document.getElementById("").getAttribute("value");
-            }
         </script>
     </body>
 </html>
