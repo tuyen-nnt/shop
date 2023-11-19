@@ -1,10 +1,13 @@
 [
   {
     "name": "Test Product 1",
+    "SKU": "001",
     "imageUrl": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
     "price": "10.000vnd",
     "discountPrice": "8.000vnd",
-    "isSale": "Sale"
+    "isSale": "Sale",
+    "itemDescription": "Nothing"
+
   },
   {
     "name": "Test Product 2",

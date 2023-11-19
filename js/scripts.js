@@ -76,13 +76,13 @@
 // Read JSON add to homepage
 $(document).ready(function() {
 
-    $.getJSON( "data.json", function(data) {
+    $.getJSON("data.json", function (data) {
         // console.log(data)
         var itemList = [];
 
-        $.each(data, function(index, items) {
+        $.each(data, function (index, items) {
             itemList.push(`
-                <div class='col mb-5 target' id='item_${index.toString()}'>
+                <div class='col mb-5 target_item' id='item_${index.toString()}'>
                     <div class='card h-100'>
                         <!-- Sale badge-->
                         <div class='badge bg-dark text-white position-absolute' style='top: 0.5rem; right: 0.5rem'>Sale</div>
@@ -112,79 +112,55 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>`);
-            });
-            // console.log(item + '\nnext\n')
+        });
+        // console.log(item + '\nnext\n')
         items = itemList.join("\n")
         $(items).appendTo("#products");
 
-        $("#target").on( "click", function() {
-            alert( "Handler for `click` called." );
+        $("#target").on("click", function () {
+            alert("Handler for `click` called.");
         });
 
-        $(".target").on( "click", function() {
+        $(".target").on("click", function () {
             // var idItem = document.getAttribute('id');
 
             var idItem = $(this).attr('id');
 
             // create query string
-            var vars = "id=" + idItem
-            console.log(vars)
-            var hr = new XMLHttpRequest()
-            var url = 'show_item.php'
+            var vars = "id=" + idItem;
+            console.log(vars);
+            var hr = new XMLHttpRequest();
+            var url = 'show_item.php';
+
+            hr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myObj = JSON.parse(hr.responseText);
+                    // astatus.innerHTML = myObj.id;
+                    console.log(myObj);
+                }
+            }
 
             hr.open("POST", url, true)
             hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
             hr.send(vars)
             console.log(hr)
-        } );
+        });
 
+        $(".target_item").on("click", function () {
+            var idItem = $(this).attr('id');
+            // Add query string for item
+            const url_item = 'http://localhost:8080/shop_item.html?';
+            const searchParams = new URLSearchParams();
+            searchParams.append('id', idItem)
+
+            const queryString = searchParams.toString();
+            console.log(queryString)
+
+            window.location.href = url_item + queryString
+        });
     });
 });
 
 
 // https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
 
-// Load item details
-$(function() {
-    $.getJSON( "data.json", function(data) {
-        // console.log(data)
-        itemList = []
-        $.each(data, function(index, items) {
-            itemList.push(`
-                        <section class='py-5'>
-                            <div class='container px-4px-lg-5my-5'>
-                                <div class='row gx-4 gx-lg-5 align-items-center'>
-                                    <div class='col-md-6'><img class='target' class='card-img-top mb-5 mb-md-0' src='https://dummyimage.com/600x700/dee2e6/6c757d.jpg'/></div>
-                                    <div class='col-md-6'>
-                                        <div class='small mb-1'>${items.SKU}</div>
-                                        <h1 class='display-5fw-bolder' type='text' name='item-name' value=''></h1>
-                                        <div class='fs-5mb-5'>
-                                            <span class='text-decoration-line-through' type='text' name='discount-price' value=''>${items.discountPrice}</span>
-                                            <span type='text' name='current-price' value=''>${items.currentPrice}</span>
-                                        </div>
-                                        <p class='lead'type='text'name='item-description' value=''>${items.itemDescription}</p>
-                                        <div class='d-flex'>
-                                            <input class='form-control text-center me-3' id='inputQuantity' type='num' value='1' style='max-width:3rem'/>
-                                            <button class='btn btn-outline-dark flex-shrink-0' type='button'>
-                                                <i class='bi-cart-fillme-1'></i>
-                                                Add to cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>`);
-            // })
-            // console.log(item + '\nnext\n')
-        });
-
-        // console.log(itemList)
-        $("<div/>", {
-            html: itemList.join("\n")
-        }).appendTo("#products_item");
-
-        // $("#target").on( "click", function() {
-        //     alert( "Handler for `click` called." );
-        // } );
-    });
-});
